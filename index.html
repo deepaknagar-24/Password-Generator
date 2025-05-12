@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="box">
+
+            <div class="upper">
+
+                <p id="box-title">Password Generator</p>
+
+                <div class="password"></div>
+
+                <div class="range-container">
+
+                   <label for="range">Password Length 
+                     <span id="passRangeValue">8</span>
+                   </label>
+
+                   <input type="range" min="0" max="20" id="passRangeInput">
+
+                </div>
+
+                <div class="checkboxes">
+
+                     <div class="form_control">
+                        <label for="uppercase">Include uppercase</label>
+                        <input type="checkbox" name="upper" id="uppercase">
+                     </div>
+
+                     <div class="form_control">
+                        <label for="numbers">Include numbers</label>
+                        <input type="checkbox" name="numbers" id="numbers">
+                     </div>
+
+                     <div class="form_control">
+                        <label for="symbols">Include symbols</label>
+                        <input type="checkbox" name="symbol" id="symbols">
+                     </div>
+
+                </div>
+
+            </div>
+
+            <button id="genBtn">Generate Password</button>
+
+
+        </div>
+
+    </div>
+     <!-- <script src="script.js"></script> -->
+
+       <script>
+
+        const passwordEle = document.querySelector('.password');
+        const passRangeValue = document.getElementById('passRangeValue');
+        const passRangeInput = document.getElementById('passRangeInput');
+        const genBtn = document.getElementById('genBtn');
+        const upperCheckEl = document.getElementById('uppercase');
+        const numbersCheckEl = document.getElementById('numbers');
+        const symbolsCheckEl = document.getElementById('symbols');
+
+        let isUpperCase = false;
+        let isNumbers = false;
+        let isSymbols = false;
+
+        let passwordLength = 8;
+        
+        const generatePassword = (passlength)=>{
+            const lowerCaseLetters = 'abcdefghijklmnopqstuvwxyz';
+            const upperCaseLettes = isUpperCase? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ': '';
+            const numbers = isNumbers? '0123456789': '';
+            const symbols =isSymbols? '!@#$%^&*()_+': '';
+
+            const passwordChar = lowerCaseLetters + upperCaseLettes + numbers + symbols;
+
+            let password = '';
+
+            for(let i=0; i<passlength; i++){
+                let charIndex = Math.floor(Math.random() * passwordChar.length);
+                password += passwordChar[charIndex];
+            }
+
+            return password;
+
+        }
+
+        passRangeInput.addEventListener('input', function(e){
+              passwordLength = +e.target.value;
+              passRangeValue.innerText = passwordLength;
+        })
+
+        genBtn.addEventListener('click', function(){
+
+              isUpperCase = upperCheckEl.checked;
+              isNumbers = numbersCheckEl.checked;
+              isSymbols = symbolsCheckEl.checked;
+
+              let password = generatePassword(passwordLength);
+              passwordEle.innerText = password
+        })
+
+       </script>
+
+      <!-- <script>
+
+        let passwordLength = 8;
+
+        const passRangeInput = document.getElementById('passRangeInput');
+        const passRangeValue = document.getElementById('passRangeValue');
+        const genBtn = document.getElementById('genBtn');
+
+        const generatePassword = (passlength)=>{
+              
+            const lowerCaseLetters = 'abcdefghijklmnopqrstuvwxyz';
+            const upperCaseLettes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const numbers = '0123456789';
+            const symbols = '!@#$%^&*()_+';
+
+            const passwordChar = lowerCaseLetters + upperCaseLettes + numbers + symbols;
+
+            let password = '';
+
+            for(let i=0; i<passlength; i++){
+                const charIndex = Math.floor( Math.random () * passwordChar.length);
+                password += passwordChar[charIndex];
+            }
+
+            return password
+        }
+
+        passRangeInput.addEventListener('input', function(e){
+             passwordLength = +e.target.value;
+             passRangeValue.innerText = passwordLength;
+        })
+
+        genBtn.addEventListener('click', function(){
+
+            const passwordEle = document.querySelector('.password');
+            let password = generatePassword(passwordLength);
+            passwordEle.innerHTML = password
+             console.log('Password', password)
+        })
+
+      </script> -->
+</body>
+</html>
